@@ -106,7 +106,7 @@ function renderTasks(date) {
   });
 }
 
-// 할 일 추가
+// ✅ 기존 할 일 추가 함수에서 마지막에 renderAllTasks 실행
 addBtn.addEventListener("click", () => {
   if (!currentDate) {
     alert("날짜를 먼저 선택하세요!");
@@ -121,13 +121,60 @@ addBtn.addEventListener("click", () => {
 
   taskInput.value = "";
   saveTasks();
-  renderTasks(currentDate);
+  renderTasks(currentDate);  // 기존 개별 날짜 목록
+  renderAllTasks();          // 전체 목록 갱신
 });
+
+// 전체 할 일 렌더링 (날짜순 정렬)
+function renderAllTasks() {
+  const allTasks = document.getElementById("allTasks");
+  allTasks.innerHTML = "";
+
+  // 날짜 키 추출 + 정렬
+  const dates = Object.keys(tasksByDate).sort((a, b) => {
+    return new Date(a) - new Date(b);
+  });
+
+  if (dates.length === 0) {
+    allTasks.innerHTML = "<li>아직 할 일이 없습니다.</li>";
+    return;
+  }
+
+  dates.forEach(date => {
+    tasksByDate[date].forEach((taskObj, index) => {
+      const li = document.createElement("li");
+      li.textContent = `${date} : ${taskObj.text}`;
+      if (taskObj.done) li.classList.add("done");
+
+      // 완료 토글
+      li.addEventListener("click", () => {
+        taskObj.done = !taskObj.done;
+        saveTasks();
+        renderAllTasks();
+      });
+
+      // 삭제 버튼
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "삭제";
+      delBtn.style.marginLeft = "10px";
+      delBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        tasksByDate[date].splice(index, 1);
+        saveTasks();
+        renderAllTasks();
+      });
+
+      li.appendChild(delBtn);
+      allTasks.appendChild(li);
+    });
+  });
+}
 
 // LocalStorage 저장
 function saveTasks() {
   localStorage.setItem("tasksByDate", JSON.stringify(tasksByDate));
 }
 
-// 실행
+// 실행 시 전체 목록도 표시
 generateCalendar();
+renderAllTasks();

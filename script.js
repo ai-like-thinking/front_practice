@@ -9,14 +9,14 @@ let tasksByDate = JSON.parse(localStorage.getItem("tasksByDate")) || {};
 let currentDate = null;
 
 // 시작일 & 종료일 지정
-const startDate = new Date(2025, 8, 22);  // 9월(월=8) 22일
-const endDate = new Date(2025, 9, 12);    // 10월(월=9) 12일
+const startDate = new Date(2025, 8, 21);  // 9월(월=8) 21일
+const endDate   = new Date(2025, 9, 11);  // 10월(월=9) 11일
 
 // 달력 생성 (특정 기간)
 function generateCalendar() {
   calendar.innerHTML = "";
 
-  // 요일 헤더 추가
+  // 요일 헤더 (일월화수목금토 순서)
   const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
   weekdays.forEach(dayName => {
     const w = document.createElement("div");
@@ -25,9 +25,9 @@ function generateCalendar() {
     calendar.appendChild(w);
   });
 
-  // 시작 요일 맞추기
+  // 시작 요일 맞추기 (일요일=0 기준)
   let date = new Date(startDate);
-  const firstDay = (date.getDay() + 6) % 7; // 일요일=0 → 월요일=0으로 맞춤
+  const firstDay = date.getDay(); // 일요일=0, 월요일=1 ...
   for (let i = 0; i < firstDay; i++) {
     const empty = document.createElement("div");
     calendar.appendChild(empty);

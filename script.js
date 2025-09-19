@@ -33,28 +33,32 @@ function generateCalendar() {
     calendar.appendChild(empty);
   }
 
-  // 날짜 채우기
-  while (date <= endDate) {
-    const y = date.getFullYear();
-    const m = date.getMonth() + 1;
-    const d = date.getDate();
-    const dateKey = `${y}-${m}-${d}`;
+while (date <= endDate) {
+  const y = date.getFullYear();
+  const m = date.getMonth() + 1;
+  const d = date.getDate();
+  const dateKey = `${y}-${m}-${d}`;
 
-    const day = document.createElement("div");
-    day.classList.add("day");
-    day.textContent = d;
+  const day = document.createElement("div");
+  day.classList.add("day");
+  day.textContent = d;
 
-    day.addEventListener("click", () => {
-      currentDate = dateKey;
-      document.querySelectorAll(".day").forEach(el => el.classList.remove("selected"));
-      day.classList.add("selected");
-      selectedDate.textContent = `📅 ${dateKey}의 할 일 목록`;
-      renderTasks(dateKey);
-    });
+  // ✅ 요일 색상 강조
+  const dayOfWeek = date.getDay(); // 0=일요일, 6=토요일
+  if (dayOfWeek === 0) day.classList.add("sunday");
+  if (dayOfWeek === 6) day.classList.add("saturday");
 
-    calendar.appendChild(day);
-    date.setDate(date.getDate() + 1);
-  }
+  day.addEventListener("click", () => {
+    currentDate = dateKey;
+    document.querySelectorAll(".day").forEach(el => el.classList.remove("selected"));
+    day.classList.add("selected");
+    selectedDate.textContent = `📅 ${dateKey}의 할 일 목록`;
+    renderTasks(dateKey);
+  });
+
+  calendar.appendChild(day);
+  date.setDate(date.getDate() + 1);
+}
 }
 
 // 할 일 렌더링

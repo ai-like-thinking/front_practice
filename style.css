@@ -15,6 +15,7 @@
 .weekday {
   font-weight: bold;
   background: #f0f0f0;
+  text-align: center;
 }
 
 .day {
@@ -32,6 +33,16 @@
 /* 날짜 칸: 일요일 빨강 */
 .day.sunday {
   color: red;
+}
+
+/* 일요일 빨강 */
+.weekday:nth-child(1) {
+  color: red;
+}
+
+/* 토요일 파랑 */
+.weekday:nth-child(7) {
+  color: blue;
 }
 
 /* 날짜 칸: 토요일 파랑 */

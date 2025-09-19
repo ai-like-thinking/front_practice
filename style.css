@@ -1,0 +1,30 @@
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.day, .weekday {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.weekday {
+  font-weight: bold;
+  background: #f0f0f0;
+}
+
+.day {
+  cursor: pointer;
+  background: #fafafa;
+}
+.day:hover {
+  background: #e0e0e0;
+}
+.day.selected {
+  background: #4CAF50;
+  color: white;
+}

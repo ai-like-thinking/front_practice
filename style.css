@@ -35,5 +35,6 @@
 .weekday:nth-child(7) { color: blue; }  /* 토요일 */
 
 /* 날짜 칸 */
-.day.sunday { color: red; }
-.day.saturday { color: blue; }
+.day.sunday { color: red; background: #ffe5e5; }
+
+.day.saturday { color: blue; background: #e5f0ff;}

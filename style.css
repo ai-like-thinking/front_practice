@@ -28,3 +28,13 @@
   background: #4CAF50;
   color: white;
 }
+
+/* 날짜 칸: 일요일 빨강 */
+.day.sunday {
+  color: red;
+}
+
+/* 날짜 칸: 토요일 파랑 */
+.day.saturday {
+  color: blue;
+}

@@ -8,6 +8,10 @@ const taskList = document.getElementById("taskList");
 let tasksByDate = JSON.parse(localStorage.getItem("tasksByDate")) || {};
 let currentDate = null;
 
+// 연휴 기간 (2025-09-02 ~ 2025-10-11)
+const holidayStart = new Date(2025, 8, 2);   // 9월(8) 2일
+const holidayEnd   = new Date(2025, 9, 11);  // 10월(9) 11일
+
 // 시작일 & 종료일 지정
 const startDate = new Date(2025, 8, 21);  // 9월(월=8) 21일
 const endDate   = new Date(2025, 9, 11);  // 10월(월=9) 11일
@@ -48,6 +52,11 @@ while (date <= endDate) {
   if (dayOfWeek === 0) day.classList.add("sunday");
   if (dayOfWeek === 6) day.classList.add("saturday");
 
+    // ✅ 연휴 강조 (holidayStart~holidayEnd 범위 안에 있으면 holiday 클래스 추가)
+  if (date >= holidayStart && date <= holidayEnd) {
+    day.classList.add("holiday");
+  }
+
   day.addEventListener("click", () => {
     currentDate = dateKey;
     document.querySelectorAll(".day").forEach(el => el.classList.remove("selected"));
@@ -60,6 +69,8 @@ while (date <= endDate) {
   date.setDate(date.getDate() + 1);
 }
 }
+
+
 
 // 할 일 렌더링
 function renderTasks(date) {

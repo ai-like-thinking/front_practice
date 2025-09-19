@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>기간 한정 To-Do List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>기간 한정 To-Do List</h1>
+
+    <!-- 기간 표시 -->
+    <h2>2025-09-22 ~ 2025-10-12</h2>
+
+    <!-- 달력 -->
+    <div id="calendar"></div>
+
+    <!-- 선택된 날짜 -->
+    <h2 id="selectedDate">날짜를 선택하세요</h2>
+
+    <!-- 할 일 입력 -->
+    <div class="input-area">
+      <input type="text" id="taskInput" placeholder="할 일을 입력하세요">
+      <button id="addBtn">추가</button>
+    </div>
+
+    <!-- 할 일 목록 -->
+    <ul id="taskList"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

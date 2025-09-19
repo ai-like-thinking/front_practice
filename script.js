@@ -11,13 +11,14 @@ let currentDate = null;
 // 날짜 포맷 함수 (YYYY-MM-DD)
 function formatDateKey(date) {
   const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0"); // 두 자리
-  const d = String(date.getDate()).padStart(2, "0");      // 두 자리
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
   return `${y}-${m}-${d}`;
 }
 
 // 오늘 날짜
-const todayKey = formatDateKey(new Date());
+const today = new Date();
+const todayKey = formatDateKey(today);
 
 // 연휴 기간 (2025-09-02 ~ 2025-10-11)
 const holidayStart = new Date(2025, 9, 3);   // 10월 3일
@@ -27,7 +28,7 @@ const holidayEnd   = new Date(2025, 9, 12);  // 10월 12일
 const startDate = new Date(2025, 8, 22);  // 9월 22일
 const endDate   = new Date(2025, 9, 13);  // 10월 13일
 
-// 달력 생성 (특정 기간)
+// 달력 생성
 function generateCalendar() {
   calendar.innerHTML = "";
 
@@ -53,7 +54,7 @@ function generateCalendar() {
     day.classList.add("day");
     day.textContent = date.getDate();
 
-    // ✅ 요일 색상 강조
+    // ✅ 요일 강조
     const dayOfWeek = date.getDay();
     if (dayOfWeek === 0) day.classList.add("sunday");
     if (dayOfWeek === 6) day.classList.add("saturday");
@@ -61,14 +62,6 @@ function generateCalendar() {
     // ✅ 연휴 강조
     if (date >= holidayStart && date <= holidayEnd) {
       day.classList.add("holiday");
-    }
-
-    // ✅ 오늘 날짜 자동 선택
-    if (dateKey === todayKey) {
-      currentDate = dateKey;
-      day.classList.add("selected");
-      selectedDate.textContent = `📅 ${dateKey}의 할 일 목록`;
-      renderTasks(dateKey);
     }
 
     // 날짜 클릭 이벤트
@@ -79,6 +72,9 @@ function generateCalendar() {
       selectedDate.textContent = `📅 ${dateKey}의 할 일 목록`;
       renderTasks(dateKey);
     });
+
+    // dataset에 날짜키 저장 (자동 선택할 때 찾아쓰기 쉽게)
+    day.dataset.dateKey = dateKey;
 
     calendar.appendChild(day);
     date.setDate(date.getDate() + 1);
@@ -119,7 +115,7 @@ function renderTasks(date) {
   });
 }
 
-// ✅ 기존 할 일 추가 함수에서 마지막에 renderAllTasks 실행
+// 할 일 추가
 addBtn.addEventListener("click", () => {
   if (!currentDate) {
     alert("날짜를 먼저 선택하세요!");
@@ -138,7 +134,7 @@ addBtn.addEventListener("click", () => {
   renderAllTasks();
 });
 
-// 전체 할 일 렌더링 (날짜순 정렬)
+// 전체 할 일 렌더링 (날짜순)
 function renderAllTasks() {
   const allTasks = document.getElementById("allTasks");
   allTasks.innerHTML = "";
@@ -186,3 +182,21 @@ function saveTasks() {
 // 실행
 generateCalendar();
 renderAllTasks();
+
+// ✅ 오늘 날짜 자동 선택 (범위 밖이면 startDate 선택)
+(function selectDefaultDate() {
+  let defaultDate;
+  if (today >= startDate && today <= endDate) {
+    defaultDate = todayKey;        // 오늘
+  } else {
+    defaultDate = formatDateKey(startDate); // 시작일
+  }
+  currentDate = defaultDate;
+
+  const targetDay = document.querySelector(`.day[data-date-key="${defaultDate}"]`);
+  if (targetDay) {
+    targetDay.classList.add("selected");
+    selectedDate.textContent = `📅 ${defaultDate}의 할 일 목록`;
+    renderTasks(defaultDate);
+  }
+})();

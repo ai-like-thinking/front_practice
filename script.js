@@ -9,8 +9,8 @@ let tasksByDate = JSON.parse(localStorage.getItem("tasksByDate")) || {};
 let currentDate = null;
 
 // 연휴 기간 (2025-09-02 ~ 2025-10-11)
-const holidayStart = new Date(2025, 8, 2);   // 9월(8) 2일
-const holidayEnd   = new Date(2025, 9, 11);  // 10월(9) 11일
+const holidayStart = new Date(2025, 9, 3);   // 10월(8) 3일
+const holidayEnd   = new Date(2025, 9, 12);  // 10월(9) 12일
 
 // 시작일 & 종료일 지정
 const startDate = new Date(2025, 8, 21);  // 9월(월=8) 21일

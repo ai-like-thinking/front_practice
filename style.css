@@ -30,22 +30,10 @@
   color: white;
 }
 
-/* 날짜 칸: 일요일 빨강 */
-.day.sunday {
-  color: red;
-}
+/* 요일 헤더 */
+.weekday:nth-child(1) { color: red; }   /* 일요일 */
+.weekday:nth-child(7) { color: blue; }  /* 토요일 */
 
-/* 일요일 빨강 */
-.weekday:nth-child(1) {
-  color: red;
-}
-
-/* 토요일 파랑 */
-.weekday:nth-child(7) {
-  color: blue;
-}
-
-/* 날짜 칸: 토요일 파랑 */
-.day.saturday {
-  color: blue;
-}
+/* 날짜 칸 */
+.day.sunday { color: red; }
+.day.saturday { color: blue; }

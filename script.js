@@ -13,7 +13,7 @@ const holidayStart = new Date(2025, 9, 3);   // 10월(8) 3일
 const holidayEnd   = new Date(2025, 9, 12);  // 10월(9) 12일
 
 // 시작일 & 종료일 지정
-const startDate = new Date(2025, 8, 21);  // 9월(월=8) 21일
+const startDate = new Date(2025, 8, 22);  // 9월(월=8) 22일
 const endDate   = new Date(2025, 9, 13);  // 10월(월=9) 11일
 
 // 달력 생성 (특정 기간)

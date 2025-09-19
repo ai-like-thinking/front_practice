@@ -8,23 +8,29 @@ const taskList = document.getElementById("taskList");
 let tasksByDate = JSON.parse(localStorage.getItem("tasksByDate")) || {};
 let currentDate = null;
 
+// 날짜 포맷 함수 (YYYY-MM-DD)
+function formatDateKey(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0"); // 두 자리
+  const d = String(date.getDate()).padStart(2, "0");      // 두 자리
+  return `${y}-${m}-${d}`;
+}
+
+// 오늘 날짜
+const todayKey = formatDateKey(new Date());
+
 // 연휴 기간 (2025-09-02 ~ 2025-10-11)
-const holidayStart = new Date(2025, 9, 3);   // 10월(9) 3일
-const holidayEnd   = new Date(2025, 9, 12);  // 10월(9) 12일
+const holidayStart = new Date(2025, 9, 3);   // 10월 3일
+const holidayEnd   = new Date(2025, 9, 12);  // 10월 12일
 
 // 시작일 & 종료일 지정
-const startDate = new Date(2025, 8, 22);  // 9월(월=8) 22일
-const endDate   = new Date(2025, 9, 13);  // 10월(월=9) 13일
-
-// 오늘 날짜 문자열 (yyyy-m-d 형식)
-const today = new Date();
-const todayKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+const startDate = new Date(2025, 8, 22);  // 9월 22일
+const endDate   = new Date(2025, 9, 13);  // 10월 13일
 
 // 달력 생성 (특정 기간)
 function generateCalendar() {
   calendar.innerHTML = "";
 
-  // 요일 헤더 (일월화수목금토 순서)
   const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
   weekdays.forEach(dayName => {
     const w = document.createElement("div");
@@ -33,7 +39,6 @@ function generateCalendar() {
     calendar.appendChild(w);
   });
 
-  // 시작 요일 맞추기 (일요일=0 기준)
   let date = new Date(startDate);
   const firstDay = date.getDay();
   for (let i = 0; i < firstDay; i++) {
@@ -42,14 +47,11 @@ function generateCalendar() {
   }
 
   while (date <= endDate) {
-    const y = date.getFullYear();
-    const m = date.getMonth() + 1;
-    const d = date.getDate();
-    const dateKey = `${y}-${m}-${d}`;
+    const dateKey = formatDateKey(date);
 
     const day = document.createElement("div");
     day.classList.add("day");
-    day.textContent = d;
+    day.textContent = date.getDate();
 
     // ✅ 요일 색상 강조
     const dayOfWeek = date.getDay();
@@ -61,7 +63,7 @@ function generateCalendar() {
       day.classList.add("holiday");
     }
 
-    // ✅ 오늘 날짜면 자동 선택
+    // ✅ 오늘 날짜 자동 선택
     if (dateKey === todayKey) {
       currentDate = dateKey;
       day.classList.add("selected");

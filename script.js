@@ -17,7 +17,7 @@ function generateCalendar() {
   calendar.innerHTML = "";
 
   // 요일 헤더 추가
-  const weekdays = ["월", "화", "수", "목", "금", "토", "일"];
+  const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
   weekdays.forEach(dayName => {
     const w = document.createElement("div");
     w.classList.add("weekday");

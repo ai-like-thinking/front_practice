@@ -67,6 +67,15 @@ while (date <= endDate) {
 
   calendar.appendChild(day);
   date.setDate(date.getDate() + 1);
+
+    // ✅ 오늘 날짜 자동 선택 표시
+    const today = new Date();
+    const todayKey = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
+    if (dateKey === todayKey) {
+      currentDate = dateKey;
+      day.classList.add("selected");
+      selectedDate.textContent = `📅 ${dateKey}의 할 일 목록`;
+      renderTasks(dateKey);  
 }
 }
 
